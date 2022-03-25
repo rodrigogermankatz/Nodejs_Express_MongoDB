@@ -21,11 +21,21 @@ console.log(`File Written!`);
 
 
 //NON-BLOCKING - ASYCHRONOUS WAY
-fileSystem.readFile('./txt/start.txt', 'utf-8', (error, data)=>{
-    //the file will be read in the background meanwhile the rest of the code continues to be executed
-    console.log(data);   
+fileSystem.readFile('./txt/start.txt', 'utf-8', (error, data1)=>{
+    fileSystem.readFile(`./txt/${data1}.txt`, 'utf-8', (error, data2)=>{
+        //the file will be read in the background and will not block the code, so meanwhile the rest of the code continues to be executed
+        console.log(data2);  
+        fileSystem.readFile('./txt/append.txt', 'utf-8', (error, data3)=>{
+            console.log(data3);
+
+            
+            fileSystem.writeFile('./txt/final.txt', `${data2}\n${data3}`, 'utf-8', (error)=>{
+                console.log('your file has been written');
+            });
+        }); 
+    });
 });
-console.log(`will read this!`);
+console.log(`will read this!`); //so first we are 
 
 
 
