@@ -1,4 +1,8 @@
 const fileSystem = require('fs');
+const http = require('http');
+
+/*----------------------------------------
+                FILE SYSTEM
 
 //BLOCKING - SYCHRONOUS WAY
 
@@ -20,8 +24,11 @@ console.log(`File Written!`);
  */
 
 
-//NON-BLOCKING - ASYCHRONOUS WAY
+/*NON-BLOCKING - ASYCHRONOUS WAY
 fileSystem.readFile('./txt/start.txt', 'utf-8', (error, data1)=>{
+
+    if(error) return console.log(`Error!`);
+
     fileSystem.readFile(`./txt/${data1}.txt`, 'utf-8', (error, data2)=>{
         //the file will be read in the background and will not block the code, so meanwhile the rest of the code continues to be executed
         console.log(data2);  
@@ -37,12 +44,34 @@ fileSystem.readFile('./txt/start.txt', 'utf-8', (error, data1)=>{
 });
 console.log(`will read this!`); //so first we are 
 
-
-
 /**
  * asychronous code is also known as non blocking
  * 
  */
+/*----------------------------------------
+----------------------------------------*/
+
+/*----------------------------------------------------
+                    HTTP SERVER
+To build our server we have to do 2 things
+- Create the server
+- Start the server to start listening incoming requests
+----------------------------------------------------*/
+
+// creating -> this includes a callback function which is executed each time a new request hits the server
+const server = http.createServer((request, response)=>{
+    //console.log(request);
+    response.end("Hello from the server");
+});
+
+// starting -> where the server starts listening incoming requests on the localhost ip and port 3000
+server.listen(3000, '127.0.0.1', ()=>{
+    console.log(`Listening requests on port 3000`);
+});
+
+
+/*----------------------------------------
+----------------------------------------*/
 
 
 /**
