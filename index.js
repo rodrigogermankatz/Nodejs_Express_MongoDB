@@ -1,5 +1,6 @@
 const fileSystem = require('fs');
 const http = require('http');
+const url = require('url');
 
 /*----------------------------------------
                 FILE SYSTEM
@@ -61,7 +62,20 @@ To build our server we have to do 2 things
 // creating -> this includes a callback function which is executed each time a new request hits the server
 const server = http.createServer((request, response)=>{
     //console.log(request);
-    response.end("Hello from the server");
+    //console.log(request.url);
+
+    if (request.url === '/' || request.url === '/overview'){
+        response.end(`Hello from the ${request.url} route`);
+    } else if (request.url === '/product'){
+        response.end(`Hello from the ${request.url} route`);
+    } else {
+        response.writeHead(404, {
+            'Content-type': 'text/html', 
+            'my_own_header': 'header_que_acabo_de_inventar'
+        });
+        response.end(`<h1>Page not found!</h1>`);
+    }
+    
 });
 
 // starting -> where the server starts listening incoming requests on the localhost ip and port 3000
